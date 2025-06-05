@@ -1,26 +1,165 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #15803d;  /* Changed to forest green */
+  --primary-dark: #166534;  /* Darker green */
+  --secondary: #14532d;  /* Deep green */
+  --text-light: #f8fafc;
+  --text-dark: #1a202c;
+  --section-padding: 5rem;
+  --grid-gap: 2rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    @apply overflow-x-hidden p-0 m-0;
+    height: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply text-gray-900 bg-white;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  #__next {
+    min-height: 100vh;
+    position: relative;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .theme-button-primary {
+    @apply bg-white text-primary px-8 py-3 rounded-full font-medium 
+    hover:bg-white/90 transition-colors inline-flex items-center gap-2;
+  }
+
+  .theme-button-secondary {
+    @apply bg-white/10 text-white px-8 py-3 rounded-full font-medium 
+    hover:bg-white/20 transition-colors;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+}
+
+/* Custom Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Base styles */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold tracking-tight;
+}
+
+h1 {
+  @apply text-6xl md:text-7xl lg:text-8xl leading-tight;
+}
+
+h2 {
+  @apply text-4xl md:text-5xl lg:text-6xl leading-tight;
+}
+
+/* Component styles */
+.grid-layout {
+  @apply grid grid-cols-12 gap-[var(--grid-gap)];
+}
+
+.section-padding {
+  @apply py-[var(--section-padding)];
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-dark to-primary;
+}
+
+.hover-scale {
+  @apply transition-transform duration-300 hover:scale-105;
+}
+
+.image-overlay {
+  @apply absolute inset-0 bg-black/50 transition-opacity duration-300;
+}
+
+.grid-item {
+  @apply relative overflow-hidden rounded-lg;
+}
+
+/* Custom shape for hero section */
+@keyframes fadeTransparency {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes imageAppear {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes textEffect {
+  0% {
+    color: white;
+    opacity: 1;
+  }
+  50% {
+    color: #15803d;  /* Changed from blue to green-700 */
+    opacity: 0.8;
+  }
+  100% {
+    color: white;
+    opacity: 1;
+  }
+}
+
+.clip-hero {
+  clip-path: polygon(0 0, 65% 0, 65% 0, 35% 100%, 0 100%);
+  animation: fadeTransparency 12s ease-in-out infinite;
+}
+
+.hero-image-container {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.hero-image-container.animate {
+  animation: imageAppear 2s ease-out forwards;
+}
+
+.hero-text {
+  animation: textEffect 12s ease-in-out infinite;
 }

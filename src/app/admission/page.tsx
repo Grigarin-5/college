@@ -31,46 +31,46 @@ export default function AdmissionForm() {
   };
 
   return (
-    <main className="min-h-screen py-12 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url("/assets/college.jpg")' }}>
+    <main className="min-h-screen py-8 sm:py-12 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url("/assets/college.jpg")' }}>
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8">
+        <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 sm:p-8">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent">Admission Form</h1>
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent">Admission Form</h1>
           </div>
 
           {/* Progress Steps */}
-          <div className="flex items-center justify-center mb-12">
+          <div className="flex items-center justify-center mb-8 sm:mb-12">
             <div className="flex items-center w-full max-w-2xl justify-between">
               <div className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
                   currentStep >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
                 }`}>
                   1
                 </div>
-                <span className="text-sm mt-2 font-medium text-gray-900">Basic Details</span>
+                <span className="text-xs sm:text-sm mt-2 font-medium text-gray-900">Basic Details</span>
               </div>
-              <div className={`flex-1 h-1 mx-4 ${
+              <div className={`flex-1 h-1 mx-2 sm:mx-4 ${
                 currentStep > 1 ? 'bg-blue-600' : 'bg-gray-200'
               }`} />
               <div className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
                   currentStep >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
                 }`}>
                   2
                 </div>
-                <span className="text-sm mt-2 font-medium text-gray-900">Contact Details</span>
+                <span className="text-xs sm:text-sm mt-2 font-medium text-gray-900">Contact Details</span>
               </div>
-              <div className={`flex-1 h-1 mx-4 ${
+              <div className={`flex-1 h-1 mx-2 sm:mx-4 ${
                 currentStep > 2 ? 'bg-blue-600' : 'bg-gray-200'
               }`} />
               <div className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
                   currentStep === 3 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
                 }`}>
                   3
                 </div>
-                <span className="text-sm mt-2 font-medium text-gray-900">Verification</span>
+                <span className="text-xs sm:text-sm mt-2 font-medium text-gray-900">Verification</span>
               </div>
             </div>
           </div>

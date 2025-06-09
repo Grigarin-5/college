@@ -1,0 +1,6 @@
+export const galleryImages = [
+  { src: '/images/mock/college.jpg', title: 'Campus View', description: 'Our beautiful campus surrounded by nature' },
+  { src: '/images/mock/library.jpg', title: 'Library', description: 'Modern library with extensive collection' },
+  { src: '/images/mock/classroom.jpg', title: 'Modern Classrooms', description: 'Well-equipped smart classrooms' },
+  { src: '/images/mock/convocation.webp', title: 'Convocation', description: 'Celebrating student achievements' }
+]; 

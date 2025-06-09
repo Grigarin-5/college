@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useScroll } from 'framer-motion'
 import { FaUser, FaChevronDown } from 'react-icons/fa'
+import Button from '@/components/common/Button'
+import TextLabel from '@/components/common/TextLabel'
 
 const mainNavItems = [
   {
@@ -56,8 +58,8 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
+      <div className="w-full">
+        <nav className="flex items-center justify-between h-16 px-5 md:pr-[6.5rem] md:pl-[90px]">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <div className="relative w-8 h-8 rounded-full overflow-hidden">
@@ -69,7 +71,12 @@ export default function Navbar() {
                 priority
               />
             </div>
-            <span className="text-white text-xl font-bold">ILAHIYA</span>
+            <TextLabel
+              text="ILAHIYA"
+              color="white"
+              variant="nav"
+              className="text-xl font-bold"
+            />
           </Link>
 
           {/* Navigation Links */}
@@ -80,14 +87,17 @@ export default function Navbar() {
           </div>
 
           {/* Student Portal Button */}
-          <motion.button
-            className="px-4 py-2 rounded bg-green-600/20 text-white text-sm font-medium tracking-wider hover:bg-green-600/30 transition-colors flex items-center gap-2"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <Button
+            variant="secondary"
+            href="/student-portal"
+            className="!bg-green-600/20 hover:!bg-green-600/30 !text-white !border-0"
           >
-            <FaUser className="text-sm" />
-            <span>STUDENT PORTAL</span>
-          </motion.button>
+            <TextLabel
+              text="STUDENT PORTAL"
+              color="white"
+              variant="button"
+            />
+          </Button>
         </nav>
       </div>
     </motion.header>
@@ -104,38 +114,12 @@ function NavLink({ item }: { item: NavItem }) {
   const [isHovered, setIsHovered] = useState(false)
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (item.href === '/#about') {
+    if (item.href.startsWith('/#')) {
       e.preventDefault();
-      const aboutSection = document.getElementById('about');
-      if (aboutSection) {
-        aboutSection.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    } else if (item.href === '/') {
-      e.preventDefault();
-      const homeSection = document.getElementById('home');
-      if (homeSection) {
-        homeSection.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    } else if (item.href === '/#programs') {
-      e.preventDefault();
-      const programsSection = document.getElementById('programs');
-      if (programsSection) {
-        programsSection.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    } else if (item.href === '/#contact') {
-      e.preventDefault();
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({
+      const sectionId = item.href.split('#')[1];
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         });
@@ -152,10 +136,15 @@ function NavLink({ item }: { item: NavItem }) {
       <Link 
         href={item.href}
         onClick={handleClick}
-        className="text-white text-sm font-medium tracking-wider hover:text-green-100/80 transition-colors flex items-center gap-1"
+        className="flex items-center gap-1"
       >
-        {item.title}
-        {item.subItems && <FaChevronDown className="text-xs" />}
+        <TextLabel
+          text={item.title}
+          color="gray"
+          variant="nav"
+          isActive={isHovered}
+        />
+        {item.subItems && <FaChevronDown className="text-xs text-white" />}
       </Link>
 
       {/* Underline animation */}
@@ -177,9 +166,13 @@ function NavLink({ item }: { item: NavItem }) {
             <Link
               key={subItem.href}
               href={subItem.href}
-              className="block px-4 py-2 text-gray-800 hover:bg-green-50 text-sm transition-colors"
+              className="block px-4 py-2 hover:bg-green-50 transition-colors"
             >
-              {subItem.title}
+              <TextLabel
+                text={subItem.title}
+                color="black"
+                variant="nav"
+              />
             </Link>
           ))}
         </motion.div>

@@ -144,9 +144,9 @@ const FacultyPage = () => {
         <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
       </div>
 
-      <div className="container mx-auto px-4 py-12 relative z-10">
+      <div className="container mx-auto px-4 py-6 sm:py-12 relative z-10">
         <motion.h1 
-          className="text-4xl font-bold text-center text-white mb-12"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-white mb-6 sm:mb-12"
           variants={headerAnimation}
           initial="initial"
           whileInView="animate"
@@ -156,9 +156,9 @@ const FacultyPage = () => {
         </motion.h1>
 
         {/* Administration Section */}
-        <section className="mb-12">
+        <section className="mb-6 sm:mb-12">
           <motion.h2 
-            className="text-2xl font-bold text-white mb-6 bg-black/30 p-3 rounded"
+            className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-6 bg-black/30 p-3 rounded"
             variants={headerAnimation}
             initial="initial"
             whileInView="animate"
@@ -167,7 +167,7 @@ const FacultyPage = () => {
             Administration
           </motion.h2>
           <motion.div 
-            className="grid md:grid-cols-2 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
             variants={staggerContainer}
             initial="initial"
             whileInView="animate"
@@ -176,13 +176,13 @@ const FacultyPage = () => {
             {administration.map((admin, index) => (
               <motion.div 
                 key={index} 
-                className="bg-white/90 backdrop-blur-md rounded-lg shadow-lg p-6 hover:bg-white/95 transition-colors duration-300"
+                className="bg-white/90 backdrop-blur-md rounded-lg shadow-lg p-4 sm:p-6 hover:bg-white/95 transition-colors duration-300"
                 variants={fadeInUp}
               >
                 <motion.div variants={fadeIn}>
-                  <h3 className="text-xl font-semibold text-gray-900">{admin.role}</h3>
-                  <p className="text-lg text-gray-900 mt-2">{admin.name}</p>
-                  <p className="text-gray-900 mt-1">{admin.qualifications}</p>
+                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">{admin.role}</h3>
+                  <p className="text-sm sm:text-base md:text-lg text-gray-900 mt-2">{admin.name}</p>
+                  <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-1">{admin.qualifications}</p>
                 </motion.div>
               </motion.div>
             ))}

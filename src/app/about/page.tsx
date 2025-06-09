@@ -127,7 +127,7 @@ export default function About() {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-blue-900/70 to-blue-950/70 flex items-center justify-center">
               <motion.h1 
-                className="text-5xl font-bold text-white text-center"
+                className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center"
                 variants={fadeInScale}
               >
                 About Ilahiya Arts and Science College

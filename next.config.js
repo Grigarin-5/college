@@ -17,12 +17,10 @@ const nextConfig = {
     // Number of pages that should be kept simultaneously without being disposed
     pagesBufferLength: 2,
   },
-  webpack: (config, { isServer }) => {
-    // Suppress the punycode warning
-    config.ignoreWarnings = [
-      { module: /node_modules\/punycode/ }
-    ];
-    return config;
+  // Turbopack configuration
+  turbopack: {
+    rules: {},
+    resolveAlias: {}
   }
 };
 

@@ -90,7 +90,7 @@ export default function SecondSection({
       className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-green-700 flex items-center py-20 relative overflow-hidden"
     >
       <div className="w-full px-4 md:px-[90px]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           <div className="lg:col-start-2 px-1">
             <motion.div
               initial={{ 
@@ -140,38 +140,68 @@ export default function SecondSection({
           </div>
         </div>
         
-        <div>
+        <div className="mt-8 md:mt-16">
           {/* Desktop Grid View */}
-          <div className="hidden md:grid md:grid-cols-3 gap-8">
+          <div className="hidden md:grid md:grid-cols-3 gap-8 perspective-1000">
             {galleryImages.map((image, index) => (
               <motion.div
                 key={index}
                 className={`${index === 0 ? 'col-span-2' : 'col-span-1'}`}
                 initial={{ 
                   opacity: 0,
-                  x: image.title === 'Modern Classrooms' ? -200 : 
-                     image.title === 'Library' ? 200 : 0,
-                  scale: image.title === 'Modern Classrooms' || image.title === 'Library' ? 1 : 0.95
+                  x: image.title === 'Modern Classrooms' ? -100 : 
+                     image.title === 'Library' ? 100 :
+                     0,
+                  y: image.title !== 'Modern Classrooms' && image.title !== 'Library' ? 20 : 0,
+                  scale: image.title === 'Modern Classrooms' || image.title === 'Library' ? 
+                         1 : 0.95,
+                  rotateX: (image.title === 'Campus View' || image.title === 'Convocation' || image.title === 'Student Life') ? 180 : 0,
+                  transformOrigin: (image.title === 'Campus View' || image.title === 'Convocation' || image.title === 'Student Life') ? 'center bottom' : 'center center'
                 }}
                 whileInView={{ 
                   opacity: 1,
                   x: 0,
-                  scale: 1
+                  y: 0,
+                  scale: 1,
+                  rotateX: 0
                 }}
-                viewport={{ once: true, margin: "-150px" }}
+                viewport={{ once: true, margin: "-100px" }}
                 transition={{
-                  duration: 1.2,
-                  delay: index * 0.3,
-                  ease: [0.25, 0.1, 0.25, 1]
+                  duration: 2,
+                  delay: index * 0.4,
+                  ease: [0.22, 1, 0.36, 1],
+                  opacity: {
+                    duration: 1.5,
+                    ease: [0.4, 0, 0.2, 1]
+                  },
+                  scale: {
+                    duration: 1.8,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  },
+                  rotateX: {
+                    duration: 2.2,
+                    ease: [0.22, 1, 0.36, 1]
+                  }
+                }}
+                style={{
+                  transformStyle: (image.title === 'Campus View' || image.title === 'Convocation' || image.title === 'Student Life') ? 
+                    'preserve-3d' : 'flat'
                 }}
               >
-                <GalleryCard image={image} index={index} imageRefs={imageRefs} imageScales={imageScales} handleImageError={handleImageError} handleImageLoad={handleImageLoad} />
+                <GalleryCard 
+                  image={image} 
+                  index={index} 
+                  imageRefs={imageRefs} 
+                  imageScales={imageScales} 
+                  handleImageError={handleImageError} 
+                  handleImageLoad={handleImageLoad} 
+                />
               </motion.div>
             ))}
           </div>
 
           {/* Mobile Carousel View */}
-          <div className="block md:hidden relative px-4 md:px-[90px]">
+          <div className="block md:hidden relative">
             <div className="overflow-hidden h-[600px] sm:h-[800px]">
               <div className="relative h-full">
                 {galleryImages.map((image, index) => (
@@ -246,7 +276,9 @@ const GalleryCard = ({ image, index, imageRefs, imageScales, handleImageError, h
       ref={el => {
         imageRefs.current[index] = el;
       }}
-      className="w-full h-full rounded-2xl overflow-hidden shadow-2xl transform-gpu relative"
+      className="w-full md:h-[400px] h-full rounded-2xl overflow-hidden shadow-2xl transform-gpu relative"
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.3 }}
     >
       <div 
         className="absolute inset-0 transform-gpu will-change-transform"

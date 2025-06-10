@@ -23,38 +23,55 @@ interface CountUpProps {
 const CountUp = ({ end, duration = 2 }: CountUpProps) => {
   const [count, setCount] = React.useState(0);
   const [hasAnimated, setHasAnimated] = React.useState(false);
-  const ref = React.useRef(null);
-  const isInView = React.useRef(null);
+  const elementRef = React.useRef<HTMLSpanElement>(null);
 
   React.useEffect(() => {
-    if (!isInView || hasAnimated) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !hasAnimated) {
+          let startTime: number;
+          let animationFrame: number;
 
-    let startTime: number;
-    let animationFrame: number;
+          const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const progress = (timestamp - startTime) / (duration * 1000);
 
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = (timestamp - startTime) / (duration * 1000);
+            if (progress < 1) {
+              setCount(Math.min(Math.floor(end * progress), end));
+              animationFrame = requestAnimationFrame(animate);
+            } else {
+              setCount(end);
+              setHasAnimated(true);
+            }
+          };
 
-      if (progress < 1) {
-        setCount(Math.min(Math.floor(end * progress), end));
-        animationFrame = requestAnimationFrame(animate);
-      } else {
-        setCount(end);
-        setHasAnimated(true);
+          animationFrame = requestAnimationFrame(animate);
+
+          return () => {
+            if (animationFrame) {
+              cancelAnimationFrame(animationFrame);
+            }
+          };
+        }
+      },
+      {
+        threshold: 0.5,
       }
-    };
+    );
 
-    animationFrame = requestAnimationFrame(animate);
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
 
     return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current);
       }
     };
-  }, [end, duration, isInView, hasAnimated]);
+  }, [end, duration, hasAnimated]);
 
-  return <span ref={ref}>{count}</span>;
+  return <span ref={elementRef}>{count}</span>;
 };
 
 const FourthSection = () => {

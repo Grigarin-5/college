@@ -1,5 +1,5 @@
- 'use client'
-import React, { useState, useRef } from 'react';
+'use client'
+import React, { useState, useRef, useEffect } from 'react';
 import FirstSection from '@/components/sections/FirstSection';
 import SecondSection from '@/components/sections/SecondSection';
 import ThirdSection from '@/components/sections/ThirdSection';
@@ -16,12 +16,31 @@ export default function Home() {
   const [imageLoadingStates, setImageLoadingStates] = useState<Record<number, boolean>>({});
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (isLoading) return; // Don't scroll while the page is still in its loading state
+
+    const scrollTimeout = setTimeout(() => {
+      if (window.location.hash) {
+        const id = window.location.hash.substring(1); // remove the '#'
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      }
+    }, 300); // Increased timeout for more reliable scrolling after layout settles
+
+    return () => clearTimeout(scrollTimeout);
+  }, [isLoading]);
 
   const handleImageLoad = (index: number) => {
     setImageLoadingStates(prev => ({ ...prev, [index]: false }));

@@ -30,6 +30,11 @@
   }
 }
 
+html, :root {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 64px; /* This accounts for the fixed navbar */
+}
+
 body {
   font-family: var(--font-arvo);
   @apply text-gray-900 bg-white;
@@ -166,44 +171,37 @@ h4 {
 /* Custom shape for hero section */
 @keyframes fadeTransparency {
   0% {
-    opacity: 1;
+    opacity: 0.9;
   }
   50% {
-    opacity: 0;
+    opacity: 0.1;
   }
   100% {
-    opacity: 1;
+    opacity: 0.9;
   }
 }
 
-@keyframes imageAppear {
-  0% {
-    opacity: 0;
-    transform: scale(1.1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes textEffect {
+@keyframes textColorChange {
   0% {
     color: white;
-    opacity: 1;
   }
   50% {
-    color: #15803d;  /* Changed from blue to green-700 */
-    opacity: 0.8;
+    color: #15803d;
   }
   100% {
     color: white;
-    opacity: 1;
   }
 }
 
 .clip-hero {
   clip-path: polygon(0 0, 45% 0, 35% 100%, 0% 100%);
+  animation: fadeTransparency 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@media (max-width: 768px) {
+  .clip-hero {
+    clip-path: polygon(0 0, 45% 0, 0% 100%, 0% 100%);
+  }
 }
 
 .hero-image-container {
@@ -227,6 +225,10 @@ h4 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.hero-text-animate {
+  animation: textColorChange 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 /* 3D perspective for program cards */

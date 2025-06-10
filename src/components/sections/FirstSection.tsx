@@ -43,7 +43,7 @@ export default function FirstSection() {
       <div className="relative z-10 h-full flex items-center">
         {/* Left Content */}
         <div className="w-[45%] relative z-10 flex items-center px-5 md:px-[90px]">
-          <div className="text-white">
+          <div className="hero-text-animate">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

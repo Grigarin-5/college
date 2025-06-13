@@ -198,7 +198,7 @@ export default function Navbar() {
           <div className="hidden lg:block">
             <Button
               variant="secondary"
-              href="/student-portal"
+              href="https://www.ilahiyakoyilandy.in/login"
               className="!bg-green-600/20 hover:!bg-green-600/30 !text-white !border-0"
             >
               <TextLabel
@@ -291,7 +291,7 @@ export default function Navbar() {
                   >
                     <Button
                       variant="secondary"
-                      href="/student-portal"
+                      href="https://www.ilahiyakoyilandy.in/login"
                       className="!bg-white/10 hover:!bg-white/20 !text-white !border-0 mt-4 w-48 flex items-center justify-center"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >

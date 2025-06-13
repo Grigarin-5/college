@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 interface TextLabelProps {
   text: string | React.ReactNode;
-  color?: 'white' | 'black' | 'green' | 'gray' | 'light';
+  color?: 'white' | 'black' | 'green' | 'gray' | 'light' | 'dark';
   variant?: 'default' | 'nav' | 'button' | 'tag';
   className?: string;
   animate?: boolean;
@@ -25,7 +25,8 @@ const TextLabel: React.FC<TextLabelProps> = ({
     black: 'text-black',
     green: 'text-green-600',
     gray: isActive ? 'text-white' : 'text-gray-400 hover:text-white/80',
-    light: 'text-green-50/90'
+    light: 'text-green-50/90',
+    dark: 'text-gray-800'
   };
 
   const variantStyles = {

@@ -1,366 +1,434 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import Heading from "@/components/common/Heading";
+import SubHeading from "@/components/common/SubHeading";
+import TextLabel from "@/components/common/TextLabel";
+import SubText from "@/components/common/SubText";
+import Navbar from "@/components/Navbar";
+import Button from "@/components/common/Button";
+import { FaArrowRight } from "react-icons/fa";
 
-const ProgramsPage = () => {
+const departmentTabs = [
+  { id: "commerce", name: "Commerce" },
+  { id: "english", name: "English" },
+  { id: "computer-application", name: "Computer Science" },
+];
+
+export default function ProgramsPage() {
   const [isClient, setIsClient] = useState(false);
-  const [showHighlight, setShowHighlight] = useState(false);
+  const [activeDepartment, setActiveDepartment] = useState("commerce");
+  const [activeCourse, setActiveCourse] = useState<string | null>(null);
 
   useEffect(() => {
     setIsClient(true);
-    if (typeof window !== 'undefined') {
-      const hash = window.location.hash;
-      if (hash) {
-        // First, ensure we're at the top of the page
-        window.scrollTo(0, 0);
-        
-        // Add a brief delay to show the page title and initial content
-        setTimeout(() => {
-          const element = document.getElementById(hash.slice(1));
-          if (element) {
-            // Start the scroll animation
-            element.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'center' 
-            });
-            
-            // Add highlight effect after scrolling
-            setTimeout(() => {
-              setShowHighlight(true);
-              element.classList.add('highlight-section');
-              setTimeout(() => {
-                element.classList.remove('highlight-section');
-                setShowHighlight(false);
-              }, 2000);
-            }, 1000); // Wait for scroll to complete
-          }
-        }, 1500); // Initial delay to show page
-      }
-    }
   }, []);
 
-  useEffect(() => {
-    if (isClient) {
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes highlightPulse {
-          0% { 
-            background-color: rgba(255, 255, 255, 0.8);
-            transform: scale(1);
-          }
-          50% { 
-            background-color: rgba(220, 252, 231, 0.95);
-            transform: scale(1.02);
-          }
-          100% { 
-            background-color: rgba(255, 255, 255, 0.8);
-            transform: scale(1);
-          }
-        }
-        .highlight-section {
-          animation: highlightPulse 2s ease-in-out;
-          position: relative;
-        }
-        .highlight-section::after {
-          content: '';
-          position: absolute;
-          inset: -1px;
-          border: 2px solid #16a34a;
-          border-radius: 8px;
-          opacity: 0;
-          animation: borderPulse 2s ease-in-out;
-        }
-        @keyframes borderPulse {
-          0% { opacity: 0; }
-          50% { opacity: 1; }
-          100% { opacity: 0; }
-        }
-      `;
-      document.head.appendChild(style);
-      return () => {
-        document.head.removeChild(style);
-      };
-    }
-  }, [isClient]);
-
-  const programs = [
+  const departments = [
     {
-      department: 'Dept. of Commerce',
+      id: "commerce",
+      title: "Department of Commerce",
+      description:
+        "Developing business leaders with practical knowledge and ethical values",
+      image: "/images/commerce.jpg",
+      about:
+        "Our Commerce department provides comprehensive education in business principles, financial management, and commercial practices, preparing students for diverse careers in the corporate world.",
       courses: [
         {
-          name: 'BCom Finance',
-          minor: 'Entrepreneurship',
-          duration: '8 Semester',
-          eligibility: 'Plus Two in any Group'
+          id: "bcom-finance",
+          title: "BCom Finance",
+          description:
+            "Specialized program focusing on financial management, investment analysis, and banking operations",
+          duration: "3 years (6 semesters)",
+          eligibility: "Plus Two in any stream with minimum 50% marks",
+          highlights: [
+            "Covers financial accounting, corporate finance, and investment management",
+            "Includes practical training in financial software and tools",
+            "Industry visits and guest lectures from finance professionals",
+          ],
+          career:
+            "Financial analyst, investment banker, accountant, tax consultant, banking professional",
         },
         {
-          name: 'BCom Computer Application',
-          minor: 'Digital Marketing',
-          duration: '8 Semester',
-          eligibility: 'Plus Two in any Group'
-        }
-      ]
-    },
-    {
-      department: 'Dept. of English',
-      courses: [
-        {
-          name: 'BA English Language & Literature',
-          minor: [
-            'English for Content Creation',
-            'English at workspace',
-            'Teaching skills in English'
+          id: "bcom-computer-application",
+          title: "BCom Computer Application",
+          description:
+            "Integration of commerce education with computer applications for modern business needs",
+          duration: "3 years (6 semesters)",
+          eligibility: "Plus Two in any stream with minimum 50% marks",
+          highlights: [
+            "Focus on business applications of computer technology",
+            "Hands-on training in accounting and business software",
+            "Industry-relevant curriculum with practical exposure",
           ],
-          duration: '8 Semester',
-          eligibility: 'Plus Two in any Group'
-        }
-      ]
+          career:
+            "Business analyst, systems analyst, database administrator, IT consultant",
+        },
+      ],
     },
     {
-      department: 'Dept. of Computer Application',
+      id: "english",
+      title: "Department of English",
+      description:
+        "Nurturing critical thinking and communication skills through literature and language studies",
+      image: "/images/english.jpg",
+      about:
+        "Our English department fosters analytical thinking, creativity, and effective communication through the study of literature, language, and critical theory.",
       courses: [
         {
-          name: 'BCA',
-          minor: null,
-          duration: '8 Semester',
-          eligibility: 'Plus two Science or plus two any stream with mathematics, computer application or computer science as an optional paper'
-        }
-      ]
-    },
-    {
-      department: 'Dept. of Management',
-      courses: [
-        {
-          name: 'BBA',
-          minor: null,
-          duration: '8 Semester',
-          eligibility: 'Plus Two in any Group'
-        }
-      ]
-    },
-    {
-      department: 'Dept. of Sociology',
-      courses: [
-        {
-          name: 'BA Sociology',
-          minor: [
-            'Sociology of mass media',
-            'Sociology of political science'
+          id: "ba-english",
+          title: "BA English Language and Literature",
+          description:
+            "Comprehensive study of English literature, language, and critical theory",
+          duration: "3 years (6 semesters)",
+          eligibility: "Plus Two in any stream with minimum 45% marks",
+          highlights: [
+            "In-depth study of British, American, and World literature",
+            "Creative writing and communication skills development",
+            "Workshops with renowned authors and scholars",
           ],
-          duration: '8 Semester',
-          eligibility: 'Plus Two in any Group'
-        }
-      ]
+          career:
+            "Content writer, editor, teacher, journalist, public relations officer",
+        },
+      ],
     },
     {
-      department: 'Dept. Of Science',
+      id: "computer-application",
+      title: "Department of Computer Applications",
+      description:
+        "Empowering students with cutting-edge technical skills for the digital age",
+      image: "/images/computer-science.jpg",
+      about:
+        "Our Computer Applications department provides hands-on training in software development, programming, and IT solutions, preparing students for careers in the technology sector.",
       courses: [
         {
-          name: 'BSc Psychology',
-          minor: 'Foundation of Behaviour',
-          duration: '8 Semester',
-          eligibility: 'Plus two Science or plus two any stream with psychology as an optional paper'
-        }
-      ]
-    }
+          id: "bca",
+          title: "Bachelor of Computer Applications (BCA)",
+          description:
+            "Comprehensive program in computer applications and software development",
+          duration: "3 years (6 semesters)",
+          eligibility:
+            "Plus Two with Mathematics/Computer Science with minimum 50% marks",
+          highlights: [
+            "Project-based learning approach",
+            "Industry-aligned curriculum with latest technologies",
+            "Internship opportunities with leading IT companies",
+          ],
+          career:
+            "Software developer, web developer, system analyst, database administrator",
+        },
+      ],
+    },
   ];
 
-  const fadeInUp = {
-    initial: {
-      y: 80,
-      opacity: 0
-    },
-    animate: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 1,
-        ease: [0.33, 1, 0.68, 1]  // Custom easing for smoother motion
-      }
-    }
-  };
-
-  const fadeIn = {
-    initial: {
-      opacity: 0
-    },
-    animate: {
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const slideInLeft = {
-    initial: {
-      x: -60,
-      opacity: 0
-    },
-    animate: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.33, 1, 0.68, 1]
-      }
-    }
-  };
-
-  const slideInRight = {
-    initial: {
-      x: 60,
-      opacity: 0
-    },
-    animate: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.33, 1, 0.68, 1]
-      }
-    }
-  };
-
-  const staggerContainer = {
-    animate: {
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  };
+  const currentDepartment =
+    departments.find((dept) => dept.id === activeDepartment) || departments[0];
 
   return (
-    <main className="min-h-screen relative">
-      {/* Background Image with Overlay */}
-      <div className="fixed inset-0 -z-10">
-        <Image
-          src="/images/ilahiya-college.jpg"
-          alt="College Background"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <main className="min-h-screen  bg-black" role="main">
+        {/* Hero Section */}
+        <header
+          className="relative h-screen flex items-center justify-center overflow-hidden"
+          role="banner"
+        >
+          {/* Background Image */}
+          <div className="absolute inset-0 -z-10">
+            <Image
+              src="/images/ilahiya-college.jpg"
+              alt="Ilahiya College Campus - A panoramic view of our educational institution"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/5" />
+          </div>
 
-      <div className="container mx-auto px-4 py-12 relative z-10">
-        <motion.div
-          initial="initial"
-          animate="animate"
-          variants={staggerContainer}
-          className="text-center mb-12"
-        >
-          <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-4 text-white"
-            variants={slideInLeft}
-          >
-            Our Academic Programs
-          </motion.h1>
-          <motion.p
-            className="text-xl text-gray-300 max-w-2xl mx-auto"
-            variants={slideInRight}
-          >
-            Explore our diverse range of academic programs designed to shape future leaders
-          </motion.p>
-        </motion.div>
-        
-        <motion.div 
-          className="space-y-8"
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: false, amount: 0.1 }}
-        >
-          {programs.map((dept, index) => (
-            <motion.div 
-              key={index} 
-              id={dept.department.replace(/\s+/g, '-')}
-              className="bg-white/80 backdrop-blur-md rounded-lg shadow-lg overflow-hidden hover:bg-white/90 transition-colors duration-300"
-              variants={fadeInUp}
+          {/* Green Overlay with 45-degree cut */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-green-700 clip-hero" />
+          </div>
+
+          <div className="container mx-auto px-4 text-center text-black relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="mb-4"
             >
-              <motion.div 
-                className="bg-gradient-to-r from-black to-gray-800 text-white px-6 py-4"
-                variants={fadeIn}
-                initial="initial"
-                whileInView="animate"
-                viewport={{ once: false, amount: 0.8 }}
-              >
-                <h2 className="text-2xl font-semibold">{dept.department}</h2>
-              </motion.div>
-              
-              <div className="p-6">
-                {dept.courses.map((course, courseIndex) => (
-                  <motion.div 
-                    key={courseIndex} 
-                    id={course.name.split(' ')[0]}
-                    className="mb-8 last:mb-0"
-                    variants={staggerContainer}
-                    initial="initial"
-                    whileInView="animate"
-                    viewport={{ once: false, amount: 0.3 }}
+              <TextLabel
+                text="ACADEMIC PROGRAMMES"
+                className="bg-white/20 px-4 py-2 rounded-full inline-block text-white tracking-wider"
+              />
+            </motion.div>
+            <h1 className="sr-only">Explore Our Academic Programmes</h1>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Heading
+                text={
+                  <span>
+                    Explore Our{" "}
+                    <span className="text-green-300">Programmes</span>
+                  </span>
+                }
+                color="white"
+                className="mb-6 leading-tight"
+              />
+              <SubText
+                text="Discover a world of opportunities with our comprehensive range of academic programmes designed to shape future leaders."
+                color="light"
+                size="large"
+                className="max-w-3xl mx-auto"
+              />
+            </motion.div>
+          </div>
+        </header>
+
+        {/* Department Tabs */}
+        <div className="bg-white w-full shadow-sm  top-[64px] z-20 md:px-6 ">
+          <div className="md:px-10 w-full  ">
+            <div className="flex overflow-x-auto hide-scrollbar">
+              <div className="flex  px-1 md:px-0 ">
+                {departmentTabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveDepartment(tab.id)}
+                    className={` px-4 md:px-6 py-4 transition-colors duration-200 ${
+                      activeDepartment === tab.id
+                        ? "border-b-2 border-green-600"
+                        : "hover:bg-gray-50"
+                    }`}
                   >
-                    <motion.h3 
-                      className="text-xl font-bold mb-4 bg-gradient-to-r from-black to-gray-800 text-transparent bg-clip-text"
-                      variants={slideInLeft}
-                    >
-                      {course.name}
-                    </motion.h3>
-                    <motion.div 
-                      className="grid md:grid-cols-2 gap-4"
-                      variants={staggerContainer}
-                    >
-                      <motion.div 
-                        variants={slideInLeft}
-                        className="space-y-4"
-                      >
-                        <div>
-                          <h4 className="font-semibold text-green-700 mb-2">Minor Offered</h4>
-                          {Array.isArray(course.minor) ? (
-                            <ul className="list-disc list-inside text-gray-900">
-                              {course.minor.map((minor, minorIndex) => (
-                                <motion.li 
-                                  key={minorIndex}
-                                  variants={fadeIn}
-                                  custom={minorIndex}
-                                  className="mb-1"
-                                >
-                                  {minor}
-                                </motion.li>
-                              ))}
-                            </ul>
-                          ) : (
-                            <p className="text-gray-900">{course.minor || 'Not applicable'}</p>
-                          )}
-                        </div>
-                      </motion.div>
-                      <motion.div 
-                        variants={slideInRight}
-                        className="space-y-4"
-                      >
-                        <div>
-                          <h4 className="font-semibold text-green-700 mb-1">Duration</h4>
-                          <p className="text-gray-900">{course.duration}</p>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-green-700 mb-1">Eligibility</h4>
-                          <p className="text-gray-900">{course.eligibility}</p>
-                        </div>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
+                    <SubHeading
+                      text={tab.name}
+                      color={activeDepartment === tab.id ? "green" : "gray"}
+                      isActive={activeDepartment === tab.id}
+                      className="whitespace-nowrap"
+                    />
+                  </button>
                 ))}
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </main>
-  );
-};
+            </div>
+          </div>
+        </div>
 
-export default ProgramsPage; 
+        {/* Department Content */}
+        <section className="py-16 bg-white w-full px-5">
+          <div className=" mx-auto md:px-16 ">
+            <div className="flex flex-col lg:flex-row gap-12">
+              {/* Department Info */}
+              <div className="md:w-[800px] w-full  ">
+                <div className="sticky top-24">
+                  <div className="  min-h-[400px] md:w-auto w-full relative rounded-xl overflow-hidden mb-6">
+                    <Image
+                      src={currentDepartment.image}
+                      alt={currentDepartment.title}
+                      width={700}
+                      height={500}
+                      className="w-full h-64 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 p-6">
+                      <SubHeading
+                        text="Department of Commerce"
+                        color="white"
+                        className="mb-2"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50 border-2 md:border-0 md:shadow-sm md:shadow-black  p-6 rounded-lg">
+                    <SubHeading
+                      text="About the Department"
+                      className="  mb-3"
+                    />
+                    <TextLabel
+                      text={currentDepartment.about}
+                      className="text-gray-600  mb-4"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Courses List */}
+              <div className="lg:w-2/3">
+                <div className="space-y-6">
+                  {currentDepartment.courses.map((course) => (
+                    <motion.div
+                      key={course.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300"
+                    >
+                      <div
+                        className="p-6 cursor-pointer"
+                        onClick={() =>
+                          setActiveCourse(
+                            activeCourse === course.id ? null : course.id
+                          )
+                        }
+                      >
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <SubHeading
+                              text={course.title}
+                              className="mb-1 text-gray-900"
+                            />
+
+                            <TextLabel
+                              text={course.description}
+                              className="text-gray-600"
+                            />
+                          </div>
+                          <button className="text-gray-400 hover:text-gray-600">
+                            <svg
+                              className={`w-5 h-5 transform transition-transform ${
+                                activeCourse === course.id ? "rotate-180" : ""
+                              }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      <AnimatePresence>
+                        {activeCourse === course.id && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-6 pb-6 pt-0 space-y-4">
+                              <div>
+                                <SubText
+                                  text="Duration"
+                                  className=" text-gray-900 mb-1"
+                                />
+
+                                <TextLabel
+                                  text={course.duration}
+                                  className="text-gray-600"
+                                />
+                              </div>
+                              <div>
+                                <SubText
+                                  text=" Eligibility"
+                                  className=" text-gray-900 mb-1"
+                                />
+
+                                <TextLabel
+                                  text={course.eligibility}
+                                  className="text-gray-600"
+                                />
+                              </div>
+                              <div>
+                                <SubText
+                                  text="       Programme Highlights"
+                                  className="font-medium text-gray-900 mb-1"
+                                />
+
+                                <ul className="list-disc pl-5 text-gray-600 space-y-1">
+                                  {course.highlights.map((highlight, index) => (
+                                    <li key={index}>
+                                      <TextLabel
+                                        text={highlight}
+                                        className="text-gray-600"
+                                      />
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div>
+                                <SubText
+                                  text="Career Opportunities"
+                                  className=" text-gray-900 mb-1"
+                                />
+
+                                <TextLabel text= {course.career} className="text-gray-600"/>
+                              </div>
+                              <div className="pt-2">
+                                <Link
+                                  href="/admission"
+                                  className="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
+                                >
+                                  Apply Now
+                                  <svg
+                                    className="w-4 h-4 ml-1"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                    />
+                                  </svg>
+                                </Link>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16 bg-gradient-to-r from-green-700 to-green-800 text-white">
+          <div className="  md:container mx-auto px-3 md:px-6 text-center">
+            <div className="md:max-w-5xl   mx-auto">
+              <Heading text=" Ready to Start Your Journey?" className=" text-white mb-6"/>
+               
+              
+              <SubText text="  Join our community of learners and take the first step towards a
+                successful career." className=" text-gray-100 mb-8"/>  
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button
+                variant="primary"
+                href="/admission"
+                icon={FaArrowRight({ className: "w-4 h-4" })}
+              >
+                <TextLabel
+                  text={<span className="hidden md:inline">Apply Now</span>}
+                  color="green"
+                  variant="button"
+                />
+                <TextLabel
+                  text={<span className="inline md:hidden">Apply</span>}
+                  color="green"
+                  variant="button"
+                />
+              </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}

@@ -86,7 +86,7 @@ const Footer = () => {
     {
       title: 'Student Zone',
       links: [
-        { label: 'Student Portal', href: '/student-portal' },
+        { label: 'Student Portal', href: 'https://www.ilahiyakoyilandy.in/login' },
         { label: 'Exam Results', href: '/results' },
         { label: 'Downloads', href: '/downloads' },
         { label: 'Alumni', href: '/alumni' }
@@ -213,7 +213,7 @@ const Footer = () => {
                     <Link href="/departments" className="text-xs md:text-sm text-gray-600 hover:text-gray-800 transition-colors duration-200">Departments</Link>
                   </motion.li>
                   <motion.li whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 300 }}>
-                    <Link href="/student-portal" className="text-xs md:text-sm text-gray-600 hover:text-gray-800 transition-colors duration-200">Student Portal</Link>
+                    <Link href="https://www.ilahiyakoyilandy.in/login" className="text-xs md:text-sm text-gray-600 hover:text-gray-800 transition-colors duration-200">Student Portal</Link>
                   </motion.li>
                 </motion.ul>
               </motion.div>
@@ -251,7 +251,7 @@ const Footer = () => {
                 className="text-xs md:text-sm text-gray-600 text-center md:text-left order-2 md:order-1 md:w-auto"
                 whileHover={{ scale: 1.02 }}
               >
-                © {currentYear} Ilahiya College. All rights reserved.
+                &copy; {currentYear} Ilahiya College. All rights reserved.
               </motion.p>
               <motion.div className="flex space-x-4 order-1 md:order-2 md:w-auto md:justify-end">
                 <motion.div whileHover={{ x: 3 }}>

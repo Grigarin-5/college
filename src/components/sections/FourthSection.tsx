@@ -79,7 +79,7 @@ const FourthSection = () => {
     <>
       {/* About Section */}
       <section id="about" className="py-20 bg-gradient-to-b from-gray-800 to-gray-900">
-        <div className="container mx-auto px-4">
+        <div>
           <ScrollReveal>
             <Heading
               text="ABOUT OUR COLLEGE"
@@ -87,7 +87,7 @@ const FourthSection = () => {
               className="text-center mb-8"
             />
           </ScrollReveal>
-          <div className="max-w-4xl mx-auto text-center">
+          <div className=" container max-w-4xl mx-auto text-center md:px-8 px-2">
             <ScrollReveal delay={0.2}>
               <SubText
                 text="Established in 2005, Ilahiya Arts and Science College is a self-financing minority institution 
@@ -95,7 +95,7 @@ const FourthSection = () => {
                 ideal environment for academic pursuits, situated on the west bank of a tributary of Korapuzha."
                 color="white"
                 size="large"
-                className="mb-6 px-5 md:px-0"
+                className="container mb-6 px-2 md:px-0"
               />
             </ScrollReveal>
             <ScrollReveal delay={0.4}>

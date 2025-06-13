@@ -1,10 +1,9 @@
 import React from 'react';
 import type { Metadata } from "next";
-import { Inter, Arvo } from "next/font/google";
+import { Arvo } from "next/font/google";
 import "./globals.css";
 import Footer from '@/components/Footer';
 
-const inter = Inter({ subsets: ["latin"] });
 const arvo = Arvo({
   weight: ['400', '700'],
   subsets: ['latin'],
